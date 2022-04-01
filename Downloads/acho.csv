@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "quantum-beach-345008",
+  "private_key_id": "f017090e3cff1c5fb1da1d049435bd692b0706d1",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDORzpgS5JgnCf0\npsUNpr48YrdwCDlc7asWWFJs91mQgUKo2+ft9jbEgKuNX0M6oVkzGGEZKG+SU/Dn\nHOZUHxR4s7PmKGCw9X8fgE5MsUDGRpQJVAz7qFh1Fbai906E5uJQop6Hh/GEtKIa\nynMqRs4A7Mq7DLw8gX/A4+k7+gczJF8tDIjYabHV2USVTB6wZ4dU1sePP8/MyB8Y\nLsBar8ZpKUdS66EBVjUbAnc5O9HEC5ea8Z5Dd70R3ZLkHKgBI0+iWjx0fmkR835W\n/rquXcL+JfUgBZ+q1VRqKD603BSoIvCDf90vT86zUkMthXI2XmmL0gO1SHmRNBW5\nAPQEGulBAgMBAAECggEAAKLeFrIV4zBdIo4iF3tUamNZNlDjJh5o6DtZlvzRSFeg\nsEabo9C/Ds9+YgPali9ZPRg0T8Z7FHgnx2j8QD7TUqNZw1zcfU+wLmmIppMTCQ4W\naffdnArcomjXF33lDwBN+3//pCuu+tM+I6nmRPH0IZXT5D3EiuoH2RTzje5FwQpv\nRVOPNzkEguPsBQglDYKstdeSIMtoX5RgkoS3NrHqdZvEQnIfba/CMx425TMdcnFQ\nlcLnelhA5QzG/yM9CxAYoPUvwG45qrALNZWxBN3RrPI0eK9XUYoiinwRUdBb1ajE\nyIWubY0RhzpjrrNK+eXBRbsPVz8z5e+LEk0OVaZJLwKBgQD1ey8Ux8WupHGWl5ft\nLUuHgI8vXHZ2ruPb82+kR1Qr2mMiY1VkOtOCTh9u2cG0Y9rgTXud4ooP83m+MW4V\n/ditaYlHONb4aG7zvtGLGF60zoM7cJRjYEfHiPQqUF641pLkMqXHScsoRzmmY0dv\n2/UstYLosZvrvHSfuHi/sgbYjwKBgQDXHgF1rgbnGjQjQcwdLYxeIKy8oKg0thl7\nF9M5jc+je6cZyvh6yXVBKzTnyZSLQTobiF4oxd3UuGXoKlLcwQVLEj2KhBwy1u+x\nXj3BJPAzs3yr21tNYKY8ZQmOLsxvyexXd96LmxHER8LIiL14D7ODEybLO6dEnRhc\nj7RcY9HpLwKBgF/TcWKMRWfSO6EMljr4toYzsjFLx9a2mK4wzkDzszDXNGGlIx1Y\nNV6lfnG4QXxYioWK2ZmdaEWnxrtu8klVaXLwQq1xy8D2i3FM6OGCZt3vy5y1aseM\nOxjyJlYqP3+qC3dXKg2sici0XRXNpYJN+9wzEuIhCvuv+lqrGT/DkBaTAoGACvM0\nD9Fz+H+U99Z5lWKkKoZvRIrJBSXf1iw4TE2zrBa3QtDaJSXsGg0g/Et+jDgdxRkD\n8f9gc1uPlGnTHfmVU2TyTQK8jLn0KYsqiZJfx8HzLqxT0XSCAcEC44HuViJpLWqk\noWabWOpuN9b+DgZ+lMV8zAuVUCDPBKcr/yf1n3ECgYBtfEs2IdAKQK8iS9+YzzzX\nPdrnm+wZ5ijkwnluAltgM/wzAQdY0sRepYe/1xNSIp5GxEw1nZ+QZ67ki/vFOm8V\ndGrZASYwhpmUXtCvHukEfqFmEFwNZd/DMxI9xWmaaCIX6cmAYg0n3vIdAtjKTmxW\nnddK4a1kDI/rM012e8AtLg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "nino-s-service-account@quantum-beach-345008.iam.gserviceaccount.com",
+  "client_id": "111285497070647098667",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nino-s-service-account%40quantum-beach-345008.iam.gserviceaccount.com"
+}
