@@ -59,19 +59,26 @@ class CheckOperations:
             if self.new_length != self.old_length:
                 if old_list[index] != new_list[index]:
                     print(f"{new_list[index]} was created")
-                    shutil.copyfile(f'{self.new_files}/{new_list[index]}',
-                                    f'{self.old_files}/{new_list[index]}')
+                    shutil.copyfile(
+                        f'{self.new_files}/{new_list[index]}',
+                        f'{self.old_files}/{new_list[index]}')
                     return new_list[index]
-
-                # if new list is created move the same file to old list too
 
                 if new_list[index] != old_list[index]:
                     print(f"{old_list[index]} was deleted")
                     os.remove(f'{self.old_files}/{new_list[index]}')
-                    # if it was delted delete in old list too
+            else:
+                for file1 in self.old_blobs_dir:
+                    df1 = pd.read_csv(f'{self.old_files}/{file1}')
+                    for file2 in self.new_blobs_dir:
+                        df2 = pd.read_csv(f'{self.old_files}/{file2}')
+                        if file1 == file2 and df1 != df2:
+                            return f"{file2} was updated"
+                        else:
+                            continue
 
-            # if it was not deleted and not created
-            # check file ext make to df and compare dfs if dfs are different say that file was changed
+                # if it was not deleted and not created
+                # check file ext make to df and compare dfs if dfs are different say that file was changed
                 return old_list[index]
 
 
