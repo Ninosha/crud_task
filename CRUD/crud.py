@@ -1,7 +1,7 @@
-from utilities.client_class import CreateClient
-from utilities.blob_class import Blob
-from utilities.bucket_task import Bucket
-from utilities.crud_class import CRUDFuncs
+from auth.client_class import CreateClient
+from CRUD.utilities.blob_class import Blob
+from auth.bucket_task import Bucket
+from CRUD.utilities.crud_class import CRUDFuncs
 import os
 
 

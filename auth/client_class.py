@@ -1,6 +1,6 @@
 from gcloud import storage
 from oauth2client.service_account import ServiceAccountCredentials
-from utilities.utils import jsonfile_to_dict
+from CRUD.utilities.utils import jsonfile_to_dict
 import os
 
 

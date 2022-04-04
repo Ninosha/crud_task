@@ -7,11 +7,9 @@
 6. check
 """
 
-from utilities.client_class import CreateClient
-from utilities.bucket_task import Bucket
-from utilities.blob_class import Blob
+from CRUD.utilities import CreateClient
+from CRUD.utilities import Bucket
 import os
-import pandas as pd
 import time
 
 url = "/home/ninosha/Desktop/crud_task/Credentials/fair-solution" \
@@ -88,15 +86,15 @@ class CheckOperations:
         dfs_new = self.updated_blobs_obj.download_file \
             ("/home/ninosha/Desktop/crud_task/new_blobs")
 
-        old_blobs_dir = os.listdir("/home/ninosha/Desktop/crud_task/old_blobs")
-        new_blobs_dir = os.listdir("/home/ninosha/Desktop/crud_task/new_blobs")
+        old_blobs_dir = os.listdir("/old_blobs")
+        new_blobs_dir = os.listdir("/new_blobs")
         old_length = len(old_blobs_dir)
         new_length = len(new_blobs_dir)
-
-        for file in :
-            print(len(os.listdir("/home/ninosha/Desktop/crud_task/old_blobs")))
-
-
+        #
+        # for file in :
+        #     print(len(os.listdir("/home/ninosha/Desktop/crud_task/old_blobs")))
+        #
+        #
 
 check = CheckOperations(updated_list)
 print(check.if_updated())
@@ -104,3 +102,22 @@ print(check.if_updated())
 # def check_if_updated(self):
 #     for filename in self.old_blobs_list:
 #         blob_file = Blob(bucket.bucket, filename)
+
+# for file2 in self.new_blobs_dir:
+#     df2 = pd.read_csv(f'{self.old_files}/{file2}')
+#     if file1 == file2:
+#         print(file1, file2)
+#         print(df1.compare(df2))
+
+# for index in range(len(self.old_blobs_dir)):
+#     df_old = pd.read_csv(f'{self.old_files}/'
+#                          f'{self.old_blobs_dir[index]}')
+#
+#     df_new = pd.read_csv(f'{self.old_files}/'
+#                          f'{self.new_blobs_dir[index]}')
+#     df = pd.concat([df_old, df_new])
+#     df = df.reset_index(drop=True)
+#     df_gpby = df.groupby(list(df.columns))
+#     idx = [x[0] for x in df_gpby.groups.values() if len(x) == 1]
+#     print(df.reindex(idx))
+#     return f"{self.new_blobs_dir[index]} was updated"

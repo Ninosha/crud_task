@@ -4,13 +4,14 @@
 3. shemdeg am failebs
 """
 
-from utilities.client_class import CreateClient
-from utilities.bucket_task import Bucket
-from utilities.blob_class import Blob
 import os
-import pandas as pd
-import time
 import shutil
+import time
+import csv
+import pandas as pd
+
+from auth.bucket_task import Bucket
+from auth.client_class import CreateClient
 
 url = "/home/ninosha/Desktop/crud_task/Credentials/fair-solution" \
       "-345912-e1b814ef61f8.json"
@@ -20,10 +21,18 @@ client = CreateClient(url, "My First Project").client
 bucket = Bucket("crudtask", client)
 
 
-class CheckUpdatedBlobs:
+class CheckOperations:
     def __init__(self, client_obj, bucket_obj):
         self.client_obj = client_obj
         self.bucket_obj = bucket_obj
+        self.old_files = "/home/ninosha/Desktop/crud_task/" \
+                         "listener_data/old_blobs"
+        self.new_files = "/home/ninosha/Desktop/crud_task/" \
+                         "listener_data/new_blobs"
+        self.old_blobs_dir = os.listdir(self.old_files)
+        self.new_blobs_dir = os.listdir(self.new_files)
+        self.old_length = len(self.old_blobs_dir)
+        self.new_length = len(self.new_blobs_dir)
 
     @staticmethod
     def download_file(dir_path):
@@ -31,56 +40,76 @@ class CheckUpdatedBlobs:
             formatted_blob = str(blob).split()[2].replace(">", "")
             blob.download_to_filename(f"{dir_path}/{formatted_blob}")
 
+    def update_directories(self):
+        self.download_file(self.old_files)
+        print("old files are downloaded")
+        time.sleep(10)
+        print("new files are downloading")
+        self.download_file(self.new_files)
 
-updated_list = CheckUpdatedBlobs(client, bucket)
-updated_list.download_file(
-    "/home/ninosha/Desktop/crud_task/listener_data")
+    def if_created_deleted(self):
 
+        old = os.listdir(self.old_files)
 
-class CheckOperations:
-    def __init__(self, updated_blobs_obj):
-        self.updated_blobs_obj = updated_blobs_obj
-        self.old_files = "/home/ninosha/Desktop/crud_task/old_blobs"
-        self.new_files = "/home/ninosha/Desktop/crud_task/new_blobs"
-        self.old_blobs_dir = os.listdir(self.old_files)
-        self.new_blobs_dir = os.listdir(self.new_files)
-        self.old_length = len(self.old_blobs_dir)
-        self.new_length = len(self.new_blobs_dir)
+        time.sleep(10)
+
+        new = os.listdir(self.new_files)
+        extra_file = " ".join(set(old + new))
+
+        if old < new:
+
+            print(f"{extra_file} was created")
+            shutil.copyfile(
+                f'{self.new_files}/{extra_file}',
+                f'{self.old_files}/{extra_file}')
+        if old > new:
+            os.remove(
+                f'{self.old_files}/{extra_file}')
+
+            return (
+                f"{extra_file} was deleted"
+            )
+
 
     def if_updated(self):
-        dfs_old = self.updated_blobs_obj.download_file(self.old_files)
-        time.sleep(10)
-        dfs_new = self.updated_blobs_obj.download_file(self.new_files)
+        for index in range(self.old_length):
+            old_file = f'{self.old_files}/{self.old_blobs_dir[index]}'
+            new_file = f'{self.new_files}/{self.new_blobs_dir[index]}'
 
-        old_list = list(self.old_blobs_dir)
-        new_list = list(self.new_blobs_dir)
+            with open(old_file, 'r') as f:
+                old = f.read()
 
-        for index in range(len(old_list)):
-            if self.new_length != self.old_length:
-                if old_list[index] != new_list[index]:
-                    print(f"{new_list[index]} was created")
-                    shutil.copyfile(
-                        f'{self.new_files}/{new_list[index]}',
-                        f'{self.old_files}/{new_list[index]}')
-                    return new_list[index]
+            with open(new_file, 'r') as f:
+                new = f.read()
 
-                if new_list[index] != old_list[index]:
-                    print(f"{old_list[index]} was deleted")
-                    os.remove(f'{self.old_files}/{new_list[index]}')
+            if old != new:
+                print(f"{self.new_blobs_dir[index]} was updated")
             else:
-                for file1 in self.old_blobs_dir:
-                    df1 = pd.read_csv(f'{self.old_files}/{file1}')
-                    for file2 in self.new_blobs_dir:
-                        df2 = pd.read_csv(f'{self.old_files}/{file2}')
-                        if file1 == file2 and df1 != df2:
-                            return f"{file2} was updated"
-                        else:
-                            continue
+                print("nothing was changed")
 
-                # if it was not deleted and not created
-                # check file ext make to df and compare dfs if dfs are different say that file was changed
-                return old_list[index]
+    @staticmethod
+    def if_read(download_path):
+        old = os.listdir(download_path)
+        time.sleep(10)
+        new = os.listdir(download_path)
+
+        extra_file = " ".join(set(old + new))
+
+        if new > old:
+            print(f"File {extra_file} was read")
 
 
-check = CheckOperations(updated_list)
-check.if_updated()
+downloads_path = input("Pass the full path of directory where you "
+                       "download files to read: ")
+
+class Listener:
+    def __init__(self, check_obj):
+        self.check_obj = check_obj
+
+    def update
+while True:
+    check = CheckOperations(updated_list)
+    check.update_directories()
+    check.if_created_deleted()
+    check.if_updated()
+    check.if_read(downloads_path)
