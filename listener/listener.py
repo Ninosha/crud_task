@@ -1,14 +1,6 @@
-"""
-1. funqcia chamovwerot chveni failebi old da new 10 wamis gansxvavbeit
-2. listad vnaxot da igive logika, vabrunebt jsons tu delte aris mashin vshlit chveni direqtoriidan am fails bolos
-3. shemdeg am failebs
-"""
-
 import os
 import shutil
 import time
-import csv
-import pandas as pd
 
 from auth.bucket_task import Bucket
 from auth.client_class import CreateClient
@@ -42,34 +34,41 @@ class CheckOperations:
 
     def update_directories(self):
         self.download_file(self.old_files)
-        print("old files are downloaded")
-        time.sleep(10)
-        print("new files are downloading")
+
+        time.sleep(5)
+
         self.download_file(self.new_files)
 
     def if_created_deleted(self):
-
+        start = time.time()
         old = os.listdir(self.old_files)
 
-        time.sleep(10)
-
         new = os.listdir(self.new_files)
-        extra_file = " ".join(set(old + new))
 
-        if old < new:
+        if len(old) < len(new):
+            extra_files = list(set(new) - set(old))
 
-            print(f"{extra_file} was created")
-            shutil.copyfile(
-                f'{self.new_files}/{extra_file}',
-                f'{self.old_files}/{extra_file}')
-        if old > new:
-            os.remove(
-                f'{self.old_files}/{extra_file}')
+            for file_index in range(len(extra_files)):
+                extra_file = "".join(extra_files[file_index])
 
-            return (
-                f"{extra_file} was deleted"
-            )
+                print(f"{extra_file} was created")
 
+                shutil.copyfile(
+                    f'{self.new_files}/{extra_file}',
+                    f'{self.old_files}/{extra_file}')
+        end = time.time()
+        print(start-end)
+        if len(old) > len(new):
+            extra_files = list(set(old) - set(new))
+            for file_index in range(len(extra_files)):
+                extra_file = "".join(extra_files[file_index])
+                os.remove(
+                    f'{self.old_files}/{extra_file}'
+                )
+
+                print(
+                    f"{extra_file} was deleted"
+                )
 
     def if_updated(self):
         for index in range(self.old_length):
@@ -84,8 +83,6 @@ class CheckOperations:
 
             if old != new:
                 print(f"{self.new_blobs_dir[index]} was updated")
-            else:
-                print("nothing was changed")
 
     @staticmethod
     def if_read(download_path):
@@ -93,23 +90,34 @@ class CheckOperations:
         time.sleep(10)
         new = os.listdir(download_path)
 
-        extra_file = " ".join(set(old + new))
+        extra_files = list(set(old) - set(new))
 
-        if new > old:
-            print(f"File {extra_file} was read")
+        for file_index in range(len(extra_files)):
+            extra_file = " ".join(extra_files[file_index])
 
+            if len(new) > len(old):
+                print(f"File {extra_file} was read")
 
-downloads_path = input("Pass the full path of directory where you "
-                       "download files to read: ")
 
 class Listener:
-    def __init__(self, check_obj):
-        self.check_obj = check_obj
+    def __init__(self, client_obj, bucket_obj):
+        self.client_obj = client_obj
+        self.bucket_obj = bucket_obj
+        self.check_obj = CheckOperations(client_obj=client_obj,
+                                         bucket_obj=bucket_obj)
 
-    def update
-while True:
-    check = CheckOperations(updated_list)
-    check.update_directories()
-    check.if_created_deleted()
-    check.if_updated()
-    check.if_read(downloads_path)
+    def listen(self):
+
+        downloads_path = input(
+            "Pass the full path of directory where you "
+            "download files to read: ")
+
+        while True:
+            self.check_obj.update_directories()
+            self.check_obj.if_created_deleted()
+            self.check_obj.if_updated()
+            self.check_obj.if_read(downloads_path)
+
+
+listener = Listener(client, bucket)
+listener.listen()
