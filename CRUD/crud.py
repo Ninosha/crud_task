@@ -10,16 +10,14 @@ class CRUD:
     class connects client, bucket, blob, and crud classes
     """
     def __init__(self, credentials_url, project_name,
-                 bucket_name, file_name=None):
+                 bucket_name):
         """
         :param credentials_url: credentials path/str
         :param project_name: str/project name
         :param bucket_name: str/bucket name
-        :param file_name: str/filename
         """
         self.project_name = project_name
         self.bucket_name = bucket_name
-        self.file_name = file_name
         self.credentials_url = credentials_url
         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = credentials_url
 
@@ -42,7 +40,7 @@ class CRUD:
         bucket = Bucket(bucket_name=self.bucket_name, client_obj=client)
         bucket = bucket.bucket
 
-        blob_file = Blob(bucket_obj=bucket, file_name=self.file_name)
+        blob_file = Blob(bucket_obj=bucket)
 
         crud_obj = CRUDFuncs(blob_file)
 

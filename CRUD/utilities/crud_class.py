@@ -1,3 +1,7 @@
+from datetime import datetime
+from CRUD.utilities.utils import logs_csv
+
+
 class CRUDFuncs:
     """
     class has functions to operate on blob, create file in bucket,
@@ -9,19 +13,23 @@ class CRUDFuncs:
         :param blob_obj: blob object instance
         """
         self.blob_obj = blob_obj
-        self.file_name = blob_obj.file_name
 
-    def creat_file(self, file_path):
+    def creat_file(self, file_name, file_path):
         """
         uploads file from file path to bucket
 
+        :param file_name:
         :param file_path: str/file path
         :return: message if operation was successful, else - error
         """
-        print(f"{self.file_name} is creating")
         try:
-            self.blob_obj.blob.upload_from_filename(file_path)
-            return f"{self.file_name} was created"
+            self.blob_obj.get_blob(file_name).upload_from_filename(
+                file_path)
+            time_now = datetime.now()
+            data = [file_name,
+                    "created",
+                    str(time_now)]
+            logs_csv(data)
 
         except FileNotFoundError as f:
             raise FileNotFoundError(f)
@@ -29,21 +37,23 @@ class CRUDFuncs:
         except NotImplementedError as f:
             raise NotImplementedError(f)
 
-    def read_file(self, path_to_download):
+    def read_file(self, file_name, path_to_download):
         """
         downloads requested file to passed path
 
+        :param file_name:
         :param path_to_download: string url
         :return: message if operation was successful, else - error
         """
-        print(f"{self.file_name} read in process")
         try:
-            self.blob_obj.blob. \
+            self.blob_obj.get_blob(file_name). \
                 download_to_filename(f"{path_to_download}/"
-                                     f"{self.file_name}")
-
-            return f"{self.file_name} is downloaded on" \
-                   f" {path_to_download} "
+                                     f"{file_name}")
+            time_now = datetime.now()
+            data = [file_name,
+                    "read",
+                    str(time_now)]
+            logs_csv(data)
 
         except FileNotFoundError as f:
             raise FileNotFoundError(f)
@@ -51,19 +61,24 @@ class CRUDFuncs:
         except NotImplementedError as f:
             raise NotImplementedError(f)
 
-    def update_file(self, filepath):
+    def update_file(self, file_name, filepath):
         """
         updates file from file path to bucket
+        :param file_name:
         :param filepath: str/file path
         :return: message if operation was successful, else - error
         """
-        print(f"{self.file_name} is updating")
         try:
-            bucket = self.blob_obj.bucket
-            bucket.delete_blob(self.file_name)
-            self.blob_obj.blob.upload_from_filename(filepath)
+            bucket = self.blob_obj.bucket_obj
+            bucket.delete_blob(file_name)
+            self.blob_obj.get_blob(file_name).upload_from_filename(
+                filepath)
 
-            return f"{self.file_name} is updated"
+            time_now = datetime.now()
+            data = [file_name,
+                    "updated",
+                    str(time_now)]
+            logs_csv(data)
 
         except FileNotFoundError as f:
             raise FileNotFoundError(f)
@@ -71,15 +86,16 @@ class CRUDFuncs:
         except NotImplementedError as f:
             raise NotImplementedError(f)
 
-    def delete_file(self):
+    def delete_file(self, file_name):
         """
         deletes file with obj filename
         :return: message if operation was successful, else - error
         """
 
-        print(f"{self.file_name} file is deleting")
-
-        bucket = self.blob_obj.bucket
-        bucket.delete_blob(self.file_name)
-
-        return f"{self.file_name} file is deleted"
+        bucket = self.blob_obj.bucket_obj
+        bucket.delete_blob(file_name)
+        time_now = datetime.now()
+        data = [file_name,
+                "deleted",
+                str(time_now)]
+        logs_csv(data)
